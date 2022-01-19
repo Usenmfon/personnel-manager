@@ -23,11 +23,12 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes>
-            <Route exact path="/" element={<App />}>
+          <Route exact path="/" element={<Login />} />
+            <Route  path="app" element={<App />}>
               <Route path="" element={<Homepage />} />
               <Route path="count_down" element={<Countdowntimer />} />
               <Route path="signup" element={<Signup />} />
-              <Route path="login" element={<Login />} />
+              
               <Route path="listing" element={<Listing />}>
                 
               </Route>
