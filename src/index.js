@@ -1,26 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AuthProvider } from "./context/auth";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
-import { ThemeProvider } from "@mui/system";
-import { theme } from "./components/theme";
-
-import Signup from "./components/Signup";
-import Countdowntimer from "./components/Countdowntimer";
-import Homepage from "./components/Homepage";
-import Signupsuccess from "./components/Signupsuccess";
-import Listing from "./components/Listing"
-import Farming from "./category/Farming";
-import Login from "./components/Login"
-import Dashboard from './components/Dashboard'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+<<<<<<< HEAD
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes>
@@ -48,6 +36,9 @@ ReactDOM.render(
           </Routes>
         </AuthProvider>
       </ThemeProvider>
+=======
+      <App />
+>>>>>>> 24a6830698d8c32eab06f0e6f25615de7e4a827e
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
