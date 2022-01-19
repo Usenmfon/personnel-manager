@@ -25,7 +25,7 @@ ReactDOM.render(
         <AuthProvider>
           <Routes>
           <Route exact path="/" element={<Login />} />
-          <Route  path="dashboard" element={<Dashboard />}></Route>
+          <Route  path="dashboard/*" element={<Dashboard />}></Route>
             <Route  path="app" element={<App />}>
               <Route path="" element={<Homepage />} />
               <Route path="count_down" element={<Countdowntimer />} />

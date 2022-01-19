@@ -1,91 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { Route, NavLink } from "react-router-dom";
-
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {  Grid, Container } from "@mui/material";
+import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-
-import { userRoutes } from "../router/user";
-import Close from "@mui/icons-material/Close";
-// import { useAuth } from "../../../contexts/AuthContext";
-
-
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
-
   const { window } = props;
-
-//   const { currentUser } = useAuth()
-
-  const [mobileOpen, setMobileOpen] = React.useState(false)
-
-  const [title, setTitle] = useState('Dashboard')
-
-  useEffect(() => {
-    const path = props?.location.pathname.split('/').pop()
-    const current = userRoutes.find((item) => item.path === path)
-    setTitle(current?.title ?? 'Dashboard')
-  }, [props.location])
-
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  
-
-  
-
   const drawer = (
     <div>
-      <Toolbar>
-        <NavLink to={`/`} exact >
-          <Typography variant="h5" sx={{ color: 'rgb(108, 117, 125)', flexGrow: 1, textAlign: 'center', fontWeight: 700 }}>
-            Personnel Tool <sup>&#8226;</sup>
-          </Typography>
-        </NavLink>
-
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
-        >
-          <Close />
-        </IconButton>
-
-      </Toolbar>
-      {
-        userRoutes.map((item, index) => {
-          return (
-            <NavLink to={`/user/${item.path}`}   exact key={index}>
-              <ListItem sx={{ pl: '30px', my: '10px' }} className="hov"  >
-                {/* <ListItemAvatar>
-                  <img src={item.icon} alt={`${item.title}_icon`} />
-                </ListItemAvatar> */}
-                <ListItemText 
-                  disableTypography 
-                  className="hov"
-                  style={{fontWeight:'bold'}}
-                  primary={item.title} sx={{ color: 'rgb(108, 117, 125)', fontWeight: 700 }} />
-              </ListItem>
-              {index % 3 === 0 && index > 1 ? <Divider component="" /> : null}
-            </NavLink>
-          )
-        })
-      }
+      <Toolbar />
+      <Divider />
+      <List>
+        {['Staff', 'Conferences', 'Training', 'Hiring', 'Retirement'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>
+              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 
@@ -94,66 +48,103 @@ function ResponsiveDrawer(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar sx={{
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
-        ml: { sm: `${drawerWidth}px` },
-        background: "#fff", color: "black", borderBottom: '1px solid #f5de06'
-      }}
-        elevation={0} position="fixed" >
-
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
+      >
         <Toolbar>
-          <IconButton color="primary" aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }} >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
             <MenuIcon />
           </IconButton>
-
-          <Grid alignItems="center" container>
-            <Grid item xs={6} sm={6}>
-              <Typography variant="h6" > {title} </Typography>
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <Typography sx={{ textAlign: 'right' }}>Email Address</Typography>
-            </Grid>
-
-          </Grid>
-
+          <Typography variant="h6" noWrap component="div">
+            Responsive drawer
+          </Typography>
         </Toolbar>
       </AppBar>
-      <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders" >
-
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
+      >
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container} variant="temporary" open={mobileOpen} onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true, }}
-          sx={{ display: { xs: 'block', sm: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }, }}
-          children={drawer} />
-
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
         <Drawer
           variant="permanent"
-          sx={{ display: { xs: 'none', sm: 'block' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }, }}
-          open children={drawer} />
-
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
       </Box>
-
-      <Container maxWidth={false} component="main" sx={{  width: { sm: `calc(100% - ${drawerWidth}px)` } }} >
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+      >
         <Toolbar />
-        <Route>
-          {
-            userRoutes.map((item, index) => {
-              return <Route
-                key={index}
-                exact
-                path={`/user/${item.path}`}
-                render={(props) => {
-                  return <item.component  {...props} />
-                }}
-              />
-            })
-          }
-        </Route>
-      </Container>
+        <Typography paragraph>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
+          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
+          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
+          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
+          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
+          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
+          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
+          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
+          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
+          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
+          sapien faucibus et molestie ac.
+        </Typography>
+        <Typography paragraph>
+          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
+          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
+          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
+          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
+          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
+          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
+          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
+          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
+          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
+          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
+          posuere sollicitudin aliquam ultrices sagittis orci a.
+        </Typography>
+      </Box>
     </Box>
   );
 }
 
-
+ResponsiveDrawer.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};
 
 export default ResponsiveDrawer;
