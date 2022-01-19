@@ -101,10 +101,7 @@ function App() {
        <Outlet />
       
     </Box>
-     
-    
-   
-    
+        
   );
 }
 

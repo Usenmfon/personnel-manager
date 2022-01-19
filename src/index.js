@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./context/auth";
@@ -9,8 +8,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/system";
 import { theme } from "./components/theme";
 
-import Signup from "./components/Signup";
-import Countdowntimer from "./components/Countdowntimer";
 import Homepage from "./components/Homepage";
 import Signupsuccess from "./components/Signupsuccess";
 import Listing from "./components/Listing"
@@ -26,7 +23,8 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <Routes>
-            <Route exact path="/" element={<App />}>
+          <Route exact path="/" element={<Login />} />
+            <Route  path="app" element={<App />}>
               <Route path="" element={<Homepage />} />
               <Route path="staff/single" element={<SingleStaff />} />
               <Route path="staff/add" element={<AddStaff />} />

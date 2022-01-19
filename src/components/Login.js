@@ -17,7 +17,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="/">
-        sapapays.com
+        personnelmanagement
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -81,14 +81,17 @@ export default function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <Link to='/dashboard'>
             <Button
-              type="submit"
+              
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+            Sign In
+              
             </Button>
+            </Link>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
