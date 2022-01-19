@@ -1,9 +1,7 @@
-import HomePage from "../pages/home"
-import LoginPage from "../pages/home/login"
+import SignIn from "../components/Login"
 
 const HomeRoutes = [
-  { path: '/', element: <HomePage/> },
-  { path: '/login', element: <LoginPage /> }
+  { path: '/', element: <SignIn /> }
 
 ]
 
