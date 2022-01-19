@@ -52,7 +52,7 @@ function ResponsiveDrawer(props) {
       <Toolbar>
         <NavLink to={`/`} exact >
           <Typography variant="h5" sx={{ color: 'rgb(108, 117, 125)', flexGrow: 1, textAlign: 'center', fontWeight: 700 }}>
-            FuturePay <sup>&#8226;</sup>
+            Personnel Tool <sup>&#8226;</sup>
           </Typography>
         </NavLink>
 
@@ -72,9 +72,9 @@ function ResponsiveDrawer(props) {
           return (
             <NavLink to={`/user/${item.path}`}   exact key={index}>
               <ListItem sx={{ pl: '30px', my: '10px' }} className="hov"  >
-                <ListItemAvatar>
+                {/* <ListItemAvatar>
                   <img src={item.icon} alt={`${item.title}_icon`} />
-                </ListItemAvatar>
+                </ListItemAvatar> */}
                 <ListItemText 
                   disableTypography 
                   className="hov"
