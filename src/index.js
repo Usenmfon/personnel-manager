@@ -16,6 +16,9 @@ import Signupsuccess from "./components/Signupsuccess";
 import Listing from "./components/Listing"
 import Farming from "./category/Farming";
 import Login from "./components/Login"
+import SingleStaff from "./components/SingleStaff";
+import AddStaff from "./components/AddStaff";
+import AllStaff from "./components/AllStaff";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,8 +28,9 @@ ReactDOM.render(
           <Routes>
             <Route exact path="/" element={<App />}>
               <Route path="" element={<Homepage />} />
-              <Route path="count_down" element={<Countdowntimer />} />
-              <Route path="signup" element={<Signup />} />
+              <Route path="staff/single" element={<SingleStaff />} />
+              <Route path="staff/add" element={<AddStaff />} />
+              <Route path="staff/all" element={<AllStaff />} />
               <Route path="login" element={<Login />} />
               <Route path="listing" element={<Listing />}>
                 
