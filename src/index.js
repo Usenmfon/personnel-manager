@@ -16,6 +16,7 @@ import Signupsuccess from "./components/Signupsuccess";
 import Listing from "./components/Listing"
 import Farming from "./category/Farming";
 import Login from "./components/Login"
+import Dashboard from './components/Dashboard'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,6 +25,7 @@ ReactDOM.render(
         <AuthProvider>
           <Routes>
           <Route exact path="/" element={<Login />} />
+          <Route  path="dashboard" element={<Dashboard />}></Route>
             <Route  path="app" element={<App />}>
               <Route path="" element={<Homepage />} />
               <Route path="count_down" element={<Countdowntimer />} />
