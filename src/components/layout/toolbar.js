@@ -12,7 +12,7 @@ export default function AccountToolbar(props) {
         <IconButton sx={{ display: { md: 'none' } }} onClick={props.toggle} >
           <Menu color="secondary" />
         </IconButton>
-        <Typography variant="h4" sx={{ flexGrow: 1 }}> Personnel Management System </Typography>
+        <Typography variant="h4" sx={{ flex: {flexGrow: 1}, fontSize : {sm: `2rem`, xs : `.8rem`} }}> Personnel Management System </Typography>
         <Button onClick={()=>navigate('/')} variant="contained" color="secondary"> Logout </Button>
       </Toolbar>
     </AppBar>

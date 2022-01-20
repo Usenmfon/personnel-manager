@@ -1,8 +1,4 @@
 import {  useRoutes } from 'react-router-dom';
-
-
-import { AuthProvider } from "./context/auth";
-
 import { ThemeProvider } from "@mui/system";
 import { theme } from "./components/theme";
 
@@ -13,9 +9,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-    <AuthProvider>
       {routes}
-    </AuthProvider>
   </ThemeProvider>
   );
 }
