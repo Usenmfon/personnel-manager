@@ -59,7 +59,7 @@ export default function RetiredStaff(props) {
       <Grid container spacing={5} justifyContent="end">
 
         <Grid item xs={12}>
-          <Typography variant="h4"> All Staff </Typography>
+          <Typography variant="h4"> Retired Staff </Typography>
         </Grid>
 
         <Grid item xs={12} sm={6} md={6}>
