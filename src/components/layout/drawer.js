@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const links = [
   { path: '/account/', title: 'Home' },
   { path: '/account/staff', title: 'Staff' },
+  { path: '/account/staff/retired', title: 'Retired' }
 ]
 
 const drawerWidth = 240

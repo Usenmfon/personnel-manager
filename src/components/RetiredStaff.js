@@ -6,22 +6,21 @@ import { useNavigate } from "react-router-dom";
 
 
 const columns = [
+  { id: "file", label: "File No.", minWidth: 170 },
+  { id: "title", label: "Title", minWidth: 170 },
   { id: "name", label: "Full Name", minWidth: 170 },
-  { id: "phone", label: "Phone No.", minWidth: 100 },
-  { id: "lga", label: "LGA", minWidth: 100 },
-  { id: "qualification", label: "Qualification", minWidth: 100 },
-  { id: "age", label: "Age", minWidth: 100 },
-  { id: "origin", label: "Cert. of origin", minWidth: 100 },
-  { id: "referee", label: "Has a referee?", minWidth: 100 },
-  { id: "email", label: "Email", minWidth: 100 },
   { id: "gender", label: "Gender", minWidth: 100 },
-  // { id: "action", label: "ACTION", align: "right", minWidth: 100 },
+  { id: "state", label: "State", minWidth: 100 },
+  { id: "faculty", label: "Faculty", minWidth: 100 },
+  { id: "department", label: "Department", minWidth: 100 },
+  { id: "position", label: "Present Position", minWidth: 100 },
+  
 ];
 
 
 const values = [
-  { name: 'Fane Fane', phone: '080232321', lga: 'Uyo', qualification: 'B.sc', age: 34, origin: 'Null', referee: 'Yes', email: 'fanefane@gmail.com', gender: 'M',  },
-  { name: 'Mercy Mendie', phone: '070243321', lga: 'Ikot Ekpene', qualification: 'HND', age: 27, origin: 'Null', referee: 'Yes', email: 'mercy@outlook.com', gender: 'F',  },
+  {file: 12323, title: 'Professor', name: 'Olufemi', gender: 'Male', state: 'Akwa Ibom', faculty: 'NAS', department: 'Computer Science', position: 'Professor',},
+  {file: 14523, title: 'Doctor', name: 'Olamide', gender: 'Male', state: 'Ogun', faculty: 'Engineering', department: 'Mechanical Engineering', position: 'Doctor',}
 ]
 
 
@@ -36,7 +35,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 
-export default function AllStaff(props) {
+export default function RetiredStaff(props) {
 
   const navigate = useNavigate()
 
@@ -75,8 +74,7 @@ export default function AllStaff(props) {
                 label="Select"
                 onChange={handleStaff}
               >
-                <MenuItem value="Academic Staff">Academic Staff</MenuItem>
-                <MenuItem value="Non Academic Staff">Non Academic Staff</MenuItem>
+                <MenuItem value="Retiring staff">Retiring staff</MenuItem>
                 <MenuItem value="Retired Staff">Retired Staff</MenuItem>
               </Select>
             </FormControl>
