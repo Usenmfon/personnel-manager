@@ -9,7 +9,7 @@ const UserRoutes = [
   {path:'',element: <UserDashboard />},
   {path:'staff',element: <AllStaff />},
   {path:'staff/retired',element: <RetiredStaff />},
-  {path:'staff/single',element: <SingleStaff />},
+  {path:'staff/single/:id',element: <SingleStaff />},
   {path:'staff/add',element: <AddStaff />},
   
 ]

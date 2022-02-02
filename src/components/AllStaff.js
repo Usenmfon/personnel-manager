@@ -103,7 +103,7 @@ export default function AllStaff(props) {
                 <TableBody>
                   {staffs.filter((item)=>item.name.includes(filter.search) && item.type === filter.type ).map((row, index) => {
                       return (
-                        <TableRow onClick={() => moveToSingle(index)} hover role="checkbox" tabIndex={-1} key={index}>
+                        <TableRow onClick={() => moveToSingle(row.id)} hover role="checkbox" tabIndex={-1} key={index}>
                           {columns.map((column) => {
                             const value = row[column.id];
                             return (
