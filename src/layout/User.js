@@ -1,13 +1,14 @@
-import { Box, Container, Toolbar } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Box, Container, Fab, Toolbar } from "@mui/material";
 import { useState } from "react";
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import AccountDrawer from "../components/layout/drawer";
 import AccountToolbar from "../components/layout/toolbar";
 
 export default function UserLayout(props) {
 
   const [drawer, setDrawer] = useState(false)
-
+  const navigate = useNavigate()
   const toggleDrawer = ()=>{
     setDrawer(!drawer)
   }
@@ -20,6 +21,10 @@ export default function UserLayout(props) {
       <Container disableGutters maxWidth={false} sx={{  width: { md: `calc(100% - 240px)` },  ml: { md: `240px` }, }}>
         <Outlet />
       </Container>
+      <Fab onClick={()=>navigate('/account/staff/add')} color="primary" sx={{position:'fixed', bottom:27,right:27}}>
+        <Add/>
+      </Fab>
+
     </Box>
   )
 }

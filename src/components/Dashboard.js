@@ -1,18 +1,15 @@
 import { Delete, VerifiedUser } from "@mui/icons-material"
 import { Button, Card, CardContent, Chip, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from "@mui/material"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { getAllStaff } from "../services/staff"
 
 
 const items = [
-  { title: 'Active Staff', value: 10 },
-  { title: 'Inactive Staff', value: 3 },
-  { title: 'Seminars', value: 3 },
+  { title: 'Total', value: 0 },
+  { title: 'Active Staff', value: 0 },
+  { title: 'Inactive Staff', value: 0 },
   { title: 'Conferences', value: 5 },
-]
-
-const staffs = [
-  { name: 'Frank Frank', phone: "0802323121", email: "mail@mail.com" },
-  { name: 'Frank sadsa', phone: "0802323121", email: "mail@mail.com" },
 ]
 
 const event = [
@@ -24,11 +21,27 @@ export default function UserDashboard() {
 
   const navigate = useNavigate()
 
+  const [staffs, setStaffs] = useState([])
+  const [stats, setStats] = useState(items)
+
+
+  useEffect(()=>{
+    getAllStaff().then((data)=>{
+      const active = data.filter((item)=> item.age <= 60)
+      const tempStats = items
+      tempStats[0].value = data.length
+      tempStats[1].value = active.length
+      tempStats[2].value = data.length - active.length
+      setStaffs(active.slice(0,5))
+      setStats([...tempStats])
+    })
+  },[])
+
 
   return (
     <Grid container spacing={5}>
       {
-        items.map((item) => (
+        stats.map((item) => (
           <Grid key={item.title} item xs={6} md={3}>
             <Card>
               <CardContent sx={{ textAlign: 'center' }}>

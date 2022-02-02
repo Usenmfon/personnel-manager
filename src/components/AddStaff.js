@@ -1,133 +1,120 @@
-import { Button, Stack, Select, OutlinedInput, InputLabel, MenuItem, FormControl, ListItemText, Checkbox, TextField, Container, Grid, Typography } from "@mui/material";
+import { Button, Stack, Select, InputLabel, MenuItem, FormControl, TextField, Container, Grid, Typography, Alert } from "@mui/material";
 import { useState } from "react";
+import { createStaff, staffType } from "../services/staff";
 
 
 const items = [
-  { id: "name", name: "name", label: "Full Name", placeholder: "Fane Fane"},
-  { id: "phone", name: "phone", label: "Phone Number", placeholder: "+234 000 000 0000"},
-  { id: "type", name: "type", label: "Type of Staff", placeholder: "+234 000 000 0000"},
-  { id: "qualification", name: "qualification", label: "Qualification", placeholder: "+234 000 000 0000"},
-  { id: "lga", name: "lga", label: "LGA", placeholder: "+234 000 000 0000"},
-  { id: "age", name: "age", label: "Age", placeholder: "Fane Fane"},
-  { id: "origin", name: "origin", label: "Cert. of Origin", placeholder: "Uyo, Nigeria"},
-  { id: "referee", name: "referee", label: "Has a referee", placeholder: "+234 000 000 0000"},
-  { id: "email", name: "email", label: "Email Address", placeholder: "johnp@gmail.com"},
-  { id: "Gender", name: "gender", label: "Gender", placeholder: "+234 000 000 0000"},
+  { id: "name", name: "name", label: "Full Name", md: 6, placeholder: "Fane Fane" },
+  { id: "referee", name: "referee", label: "Has a referee", placeholder: "+234 000 000 0000" },
+  { id: "phone", name: "phone", type: 'tel', label: "Phone Number", placeholder: "+234 000 000 0000" },
+  { id: "email", name: "email", type: 'email', label: "Email Address", placeholder: "johnp@gmail.com" },
+  { id: "Gender", name: "gender", type: 'select', label: "Gender", placeholder: "+234 000 000 0000" },
+  { id: "dob", name: "dob", label: "Date of Birth", type: 'date', placeholder: "Fane Fane" },
+  { id: "type", name: "type", type: 'select', label: "Type of Staff", placeholder: "+234 000 000 0000" },
+  { id: "qualification", name: "qualification", type: 'select', label: "Qualification", placeholder: "+234 000 000 0000" },
+  { id: "lga", name: "lga", label: "LGA", placeholder: "+234 000 000 0000" },
+  { id: "origin", name: "origin", label: "Cert. of Origin", placeholder: "Uyo, Nigeria" },
 ]
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+const defaultData = {}
 
-const names = [
-  'First School Cert.',
-  'SSCE',
-  'OND',
-  'HND',
-  'Bsc',
-];
+items.forEach((item) => {
+  defaultData[item.name] = ''
+})
+
+
+const names = [ 'First School Cert.', 'SSCE', 'OND', 'HND', 'Bsc', ]
+
+
+const selectOptions = {
+  type: staffType,
+  qualification: [...names],
+  gender: ['Male', 'Female']
+}
+
 
 
 export default function AddStaff(props) {
 
-  const [values,setValues] = useState({})
+  const [values, setValues] = useState(defaultData)
+  const [error, setError] = useState('')
+  const [sucess, setSucess] = useState('')
 
-  const [qualification, setQualification] = useState([]);
+  const submit = (e) => {
+    e.preventDefault()
 
-  const [staff, setStaff] = useState('');
+    if (Object.values(values).some((item) => !item)) {
+      setError('Please input all fields and set image')
+      return
+    }
 
-  const handleStaff = (event) => {
-    setStaff(event.target.value);
-  };
+    createStaff(values).then(() => {
+      setSucess('Staff created sucessfuly')
+      //e.target.reset()
+    })
 
-  const handletQualification = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setQualification(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+  }
 
-  const handleChange = (e)=>{
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   }
 
-  return(
-  <Container>
-    <Grid container spacing={5} justifyContent="center">
-      <Grid item xs={12}>
-        <Typography> Add New Staff </Typography>
-      </Grid>
+  return (
+    <Container>
+      <Grid container spacing={5} justifyContent="center">
+        <Grid item xs={12}>
+        <Typography variant="h4"> Add Staff </Typography>
 
-      <Grid item xs={10}>
-        <Stack spacing={3}>
-        {items.map((item) => {
-              return item.id === "qualification" ? (
-                <FormControl fullWidth sx={{ m: 1 }}>
-                    <InputLabel id="demo-multiple-checkbox-label">Qualification</InputLabel>
-                    <Select
-                      labelId="demo-multiple-checkbox-label"
-                      id="demo-multiple-checkbox"
-                      multiple
-                      value={qualification}
-                      onChange={handletQualification}
-                      input={<OutlinedInput label="Qualification" />}
-                      renderValue={(selected) => selected.join(',')}
-                      MenuProps={MenuProps}
-                    >
-                      {names.map((name) => (
-                        <MenuItem key={name} value={name}>
-                          <Checkbox checked={qualification.indexOf(name) > -1} />
-                          <ListItemText primary={name} />
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                ) : (item.id === "type" ? (
-                  <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Type of Staff</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={staff}
-                label="Type of Staff"
-                onChange={handleStaff}
-              >
-                <MenuItem value="Academic Staff">Academic Staff</MenuItem>
-                <MenuItem value="Non Academic Staff">Non Academic Staff</MenuItem>
-                <MenuItem value="Retired Staff">Retired Staff</MenuItem>
-              </Select>
-            </FormControl>
-                ): (
-                  
-                  <TextField
-                    fullWidth
-                      key={item.id}
-                      label={item.label}
-                      id={item.id}
-                      name={item.name}
-                      onChange={handleChange}
-                  />
+        </Grid>
+
+        <Grid item xs={12}>
+          {error && (
+            <Alert severity="error">
+              {error}
+            </Alert>
+          )}
+          {sucess && (
+            <Alert severity="success">
+              {sucess}
+            </Alert>
+          )}
+        </Grid>
+
+        <Grid item xs={10}>
+          <form onSubmit={submit}>
+
+            <Grid container spacing={3}>
+              {
+                items.map((item) => (
+                  <Grid item xs={12} sm={6} key={item.name}>
+                    {
+                      item.type === 'select'
+                        ?
+                        <FormControl fullWidth>
+                          <InputLabel> {item.label} </InputLabel>
+                          <Select label={item.label} name={item.name} value={values[item.name]} onChange={handleChange}  >
+                            {
+                              selectOptions[item.name].map((option) => (
+                                <MenuItem key={option} value={option} > {option} </MenuItem>
+                              ))
+                            }
+                          </Select>
+                        </FormControl>
+                        : <TextField onChange={handleChange} type={item.type ?? 'text'} label={item.label} placeholder={item.placeholder} name={item.name} fullWidth />
+                    }
+                  </Grid>
                 ))
-            })}
-        </Stack>
-        <Stack direction="row" sx={{my:5}} spacing={5} justifyContent="center">
-          <Button variant="contained"> Add </Button>
+              }
+            </Grid>
+            <Stack direction="row" sx={{ my: 5 }} spacing={5} justifyContent="center">
+              <Button type="submit" variant="contained"> Add </Button>
 
-        </Stack>
-      </Grid>      
-    </Grid>
-  </Container>
+            </Stack>
+          </form>
+        </Grid>
+      </Grid>
+    </Container>
   )
 
 }

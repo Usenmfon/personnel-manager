@@ -1,28 +1,23 @@
-import React from "react";
-import { Delete } from "@mui/icons-material";
-import { Button, Box, FormControl, InputLabel, Container, Select, MenuItem, Grid, IconButton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Delete, Search } from "@mui/icons-material";
+import { FormControl, InputLabel, Container, Select, MenuItem, Grid, IconButton, Stack, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { getAllStaff, staffType } from "../services/staff";
 
 
 
 const columns = [
   { id: "name", label: "Full Name", minWidth: 170 },
-  { id: "phone", label: "Phone No.", minWidth: 100 },
-  { id: "lga", label: "LGA", minWidth: 100 },
-  { id: "qualification", label: "Qualification", minWidth: 100 },
-  { id: "age", label: "Age", minWidth: 100 },
-  { id: "origin", label: "Cert. of origin", minWidth: 100 },
-  { id: "referee", label: "Has a referee?", minWidth: 100 },
-  { id: "email", label: "Email", minWidth: 100 },
-  { id: "gender", label: "Gender", minWidth: 100 },
+  { id: "phone", label: "Phone No.", minWidth: 80 },
+  { id: "lga", label: "LGA" },
+  { id: "qualification", label: "Qualification",},
+  { id: "gender", label: "Gender", minWidth: 20 },
+  { id: "age", label: "Age", minWidth: 20 },
+  //{ id: "origin", label: "Cert. of origin", minWidth: 100 },
+  //{ id: "referee", label: "Has a referee?", minWidth: 100 },
+  { id: "email", label: "Email", },
   // { id: "action", label: "ACTION", align: "right", minWidth: 100 },
 ];
-
-
-const values = [
-  { name: 'Fane Fane', phone: '080232321', lga: 'Uyo', qualification: 'B.sc', age: 34, origin: 'Null', referee: 'Yes', email: 'fanefane@gmail.com', gender: 'M',  },
-  { name: 'Mercy Mendie', phone: '070243321', lga: 'Ikot Ekpene', qualification: 'HND', age: 27, origin: 'Null', referee: 'Yes', email: 'mercy@outlook.com', gender: 'F',  },
-]
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -40,19 +35,22 @@ export default function AllStaff(props) {
 
   const navigate = useNavigate()
 
-  const [staff, setStaff] = React.useState('');
+  const [filter, setFilter] = React.useState({search:'',type:staffType[0]});
+  const [staffs, setStaffs] = useState([])
 
-  const handleStaff = (event) => {
-    setStaff(event.target.value);
-  };
+  useEffect(() => {
+    getAllStaff().then((data) => {
+      setStaffs(data)
+    })
+  }, [])
 
-  const handleChange = (e) => {
-    console.log(e.target.value)
+  const handleFilter = (e) => {
+    const {name,value} = e.target
+    setFilter({...filter,[name]:value})
   }
 
-  const moveToSingle = () => {
-    console.log(navigate)
-    navigate('/account/staff/single')
+  const moveToSingle = (index) => {
+    navigate(`/account/staff/single/${index}`)
   }
 
   return (
@@ -64,25 +62,20 @@ export default function AllStaff(props) {
         </Grid>
 
         <Grid item xs={12} sm={6} md={6}>
-          <Stack direction="row" spacing={4}>
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Select</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={staff}
-                label="Select"
-                onChange={handleStaff}
-              >
-                <MenuItem value="Academic Staff">Academic Staff</MenuItem>
-                <MenuItem value="Non Academic Staff">Non Academic Staff</MenuItem>
-                <MenuItem value="Retired Staff">Retired Staff</MenuItem>
+          <Stack direction="row" justifyContent="end" spacing={4}>
+            <FormControl size="small">
+              <InputLabel>Select</InputLabel>
+              <Select value={filter.type} name="type" label="Select" onChange={handleFilter} >
+                {
+                  staffType.map((item)=>(
+                    <MenuItem key={item} value={item}> {item} </MenuItem>
+                  ))
+                }
               </Select>
             </FormControl>
-          </Box>
-            <TextField label="Search" onChange={handleChange} name="search" />
-            <Button variant="contained" > Search </Button>
+            <TextField InputProps={{
+              endAdornment: <Search />
+            }} size="small" label="Search" onChange={handleFilter} name="search" />
           </Stack>
         </Grid>
 
@@ -108,10 +101,9 @@ export default function AllStaff(props) {
               </TableHead>
               {
                 <TableBody>
-                  {values
-                    .map((row) => {
+                  {staffs.filter((item)=>item.name.includes(filter.search) && item.type === filter.type ).map((row, index) => {
                       return (
-                        <TableRow onClick={moveToSingle} hover role="checkbox" tabIndex={-1} key={row.code}>
+                        <TableRow onClick={() => moveToSingle(index)} hover role="checkbox" tabIndex={-1} key={index}>
                           {columns.map((column) => {
                             const value = row[column.id];
                             return (
