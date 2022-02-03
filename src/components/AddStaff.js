@@ -1,4 +1,4 @@
-import { Button, Stack, Select, InputLabel, MenuItem, FormControl, TextField, Container, Grid, Typography, Alert } from "@mui/material";
+import { Button, Stack, MenuItem, TextField, Container, Grid, Typography, Alert } from "@mui/material";
 import { useState } from "react";
 import { createStaff, staffType } from "../services/staff";
 
@@ -12,6 +12,8 @@ const items = [
   { id: "dob", name: "dob", label: "Date of Birth", type: 'date', placeholder: "Fane Fane" },
   { id: "type", name: "type", type: 'select', label: "Type of Staff", placeholder: "+234 000 000 0000" },
   { id: "qualification", name: "qualification", type: 'select', label: "Qualification", placeholder: "+234 000 000 0000" },
+  { id: "faculty", name: "faculty", label: "Falculty", placeholder: "Biology" },
+  { id: "department", name: "department", label: "Department", placeholder: "Junior" },
   { id: "lga", name: "lga", label: "LGA", placeholder: "+234 000 000 0000" },
   { id: "origin", name: "origin", label: "Cert. of Origin", placeholder: "Uyo, Nigeria" },
 ]
@@ -50,7 +52,7 @@ export default function AddStaff(props) {
 
     createStaff(values).then(() => {
       setSucess('Staff created sucessfuly')
-      //e.target.reset()
+      e.target.reset()
     })
 
   }
@@ -90,17 +92,14 @@ export default function AddStaff(props) {
                   <Grid item xs={12} sm={6} key={item.name}>
                     {
                       item.type === 'select'
-                        ?
-                        <FormControl fullWidth>
-                          <InputLabel> {item.label} </InputLabel>
-                          <Select label={item.label} name={item.name} value={values[item.name]} onChange={handleChange}  >
-                            {
-                              selectOptions[item.name].map((option) => (
-                                <MenuItem key={option} value={option} > {option} </MenuItem>
-                              ))
-                            }
-                          </Select>
-                        </FormControl>
+                      ?
+                        <TextField select fullWidth label={item.label} name={item.name} value={values[item.name]} onChange={handleChange}  >
+                          {
+                            selectOptions[item.name].map((option) => (
+                              <MenuItem key={option} value={option} > {option} </MenuItem>
+                            ))
+                          }
+                        </TextField>
                         : <TextField onChange={handleChange} type={item.type ?? 'text'} label={item.label} placeholder={item.placeholder} name={item.name} fullWidth />
                     }
                   </Grid>

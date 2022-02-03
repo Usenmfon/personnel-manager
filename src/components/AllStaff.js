@@ -13,8 +13,8 @@ const columns = [
   { id: "qualification", label: "Qualification",},
   { id: "gender", label: "Gender", minWidth: 20 },
   { id: "age", label: "Age", minWidth: 20 },
-  //{ id: "origin", label: "Cert. of origin", minWidth: 100 },
-  //{ id: "referee", label: "Has a referee?", minWidth: 100 },
+  { id: "origin", label: "Cert. of origin", minWidth: 100 },
+  { id: "referee", label: "Has a referee?", minWidth: 100 },
   { id: "email", label: "Email", },
   // { id: "action", label: "ACTION", align: "right", minWidth: 100 },
 ];

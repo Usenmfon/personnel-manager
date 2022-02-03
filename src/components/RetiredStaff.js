@@ -8,13 +8,13 @@ import { getAllStaff } from "../services/staff";
 
 const columns = [
   { id: "id", label: "ID" },
-  { id: "name", label: "Full Name", minWidth: 170 },
-  { id: "title", label: "Title", minWidth: 50 },
-  { id: "gender", label: "Gender", minWidth: 25 },
-  { id: "state", label: "State", minWidth: 100 },
-  { id: "faculty", label: "Faculty", minWidth: 100 },
-  { id: "department", label: "Department", minWidth: 100 },
-  { id: "position", label: "Present Position", minWidth: 100 },
+  { id: "name", label: "Full Name", },
+  { id: "title", label: "Title",},
+  { id: "gender", label: "Gender", },
+  { id: "state", label: "State", },
+  { id: "faculty", label: "Faculty", },
+  { id: "department", label: "Department", },
+  { id: "position", label: "Present Position", },
 
 ];
 
